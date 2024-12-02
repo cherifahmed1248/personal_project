@@ -1,0 +1,38 @@
+.task-container {
+    .header-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .task-item {
+        display: flex;
+        align-items: center;
+
+        .task-label {
+            flex: 1;
+
+            &.completed {
+                text-decoration: line-through;
+            }
+        }
+
+        .spacer {
+            flex: 1;
+        }
+    }
+
+    .no-tasks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #757575;
+        margin-top: 20px;
+
+        mat-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+    }
+}

@@ -1,0 +1,60 @@
+<div class="page">
+    <div class="task-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Tasks</mat-card-title>
+                <div class="header-actions">
+                    <mat-button-toggle-group [(ngModel)]="statusFilter" (change)="filterTasks()">
+                        <mat-button-toggle value="all">All</mat-button-toggle>
+                        <mat-button-toggle value="pending">To Do</mat-button-toggle>
+                        <mat-button-toggle value="completed">Completed</mat-button-toggle>
+                    </mat-button-toggle-group>
+
+                    <button mat-raised-button color="primary" (click)="addTask()" class="ms-3">
+                        <mat-icon>add</mat-icon> New Task
+                    </button>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>            
+                <mat-list>
+                    <mat-list-item *ngFor="let task of tasks$ | async" class="task-item">
+                        <div class="task-container">
+                            <span class="task-label" [class.completed]="task.completed">
+                                {{ task.label }}
+                            </span>
+                            <span class="task-status">
+                                <span [ngClass]="{'completed': task.completed, 'pending': !task.completed}">
+                                    <mat-icon>{{ task.completed ? 'done' : 'schedule' }}</mat-icon>
+                                    {{ task.completed ? 'Completed' : 'To Do' }}
+                                </span>
+                            </span>
+                            <span class="task-action">
+                                <button mat-icon-button matTooltip="Edit Task"
+                                class="edit-button" [routerLink]="['/tasks', task.id]"
+                                color="primary">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </span>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            
+                <div *ngIf="(tasks$ | async)?.length === 0" class="no-tasks">
+                    <mat-icon>assignment</mat-icon>
+                    <p>No tasks found</p>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <mat-paginator 
+                    [length]="totalTasks" 
+                    [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 25]"
+                    (page)="onPageChange($event)"
+                    aria-label="Select page">
+                </mat-paginator>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

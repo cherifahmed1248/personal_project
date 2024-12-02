@@ -1,0 +1,49 @@
+<div class="card" *ngIf="isReady">
+  <div class="card-header">
+    <h5 class="mb-0">{{  isNewTask ? 'Add New Task' : 'Edit Task' }}</h5>
+  </div>
+  <div class="card-body">
+    <form #taskForm="ngForm">
+      <div class="row form-item">
+        <label for="label" class="col-3 col-form-label text-end mb-1">Label</label>
+        <div class="col-9">
+          <input type="text" 
+                 class="form-control" 
+                 id="label" 
+                 name="label"
+                 [(ngModel)]="task.label"
+                 [readonly]="!isNewTask"
+                 required>
+        </div>
+      </div>
+
+      <div class="row form-item">
+        <label for="description" class="col-3 col-form-label text-end mb-1">Description</label>
+        <div class="col-9">
+          <textarea class="form-control" 
+                    id="description" 
+                    name="description"
+                    rows="3"
+                    [(ngModel)]="task.description"
+                    [readonly]="!isNewTask">
+          </textarea>
+        </div>
+      </div>
+
+    <div class="text-center d-flex justify-content-center" style="display: flex">
+        <button mat-raised-button
+                [color]="isNewTask ? 'primary' : (task.completed ? 'accent' : 'warn')"
+                (click)="saveTask()"
+                [disabled]="!taskForm.valid || task.completed"
+                class="action-button">
+            <mat-icon>{{isNewTask ? 'add_task' : (task.completed ? 'task_alt' : 'pending_actions')}}</mat-icon>
+            <span>{{ isNewTask ? 'Add Task' : (task.completed ? 'Completed' : 'Mark as Complete') }}</span>
+        </button>
+
+        <button mat-raised-button  color="basic"  class="mx-2"  (click)="goBack()">
+            Back
+        </button>
+    </div>
+    </form>
+  </div>
+</div>
